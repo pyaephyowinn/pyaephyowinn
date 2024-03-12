@@ -1,1 +1,1 @@
-A self-taught student in CS who enjoys crafting beautiful things.
+A self-taught developer in CS who enjoys crafting beautiful things.
