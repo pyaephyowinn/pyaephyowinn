@@ -4,6 +4,6 @@
 - I mainly use TypeScript for ReactJS and Node.js
 
 
-[![pyaephyowinn's GitHub stats](pyaephyowin-github-readme-stats.vercel.app/api?username=pyaephyowinn&theme=tokyonight)]
+[![pyaephyowinn's GitHub stats](https://pyaephyowin-github-readme-stats.vercel.app/api?username=pyaephyowinn&theme=tokyonight)]
 
 - Contact - pyaephyowin.dev@gmail.com
