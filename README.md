@@ -1,6 +1,6 @@
 # About Me
 - I am Senior Frontend Developer at [Infinity Global Solutions](https://www.infinityglobals.com/)
-- I love Full stack applications development.
+- I love Full Stack applications development.
 - I mainly use TypeScript, ReactJS and Node.js
 
 
