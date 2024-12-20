@@ -1,4 +1,4 @@
 # About Me
 
-- Full Stack at AYA Bank
+- Full Stack Developer at AYA Bank.
 - I mainly use TypeScript and Go.
