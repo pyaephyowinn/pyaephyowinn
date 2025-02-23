@@ -11,4 +11,4 @@ I'm a passionate Full Stack Developer with around 3 years of experience in build
 
 ## 📫 Let's Connect!
 
-Feel free to reach out to me via [LinkedIn](https://www.linkedin.com/in/pyae-phyo-win-762792246/) or check out my portfolio at [pyaephyowin.vercel.app](https://www.pyaephyowin.vercel.app). You can also explore my projects on [GitHub](https://github.com/pyaephyowinn).
+Feel free to reach out to me via [LinkedIn](https://www.linkedin.com/in/pyae-phyo-win-762792246/) or check out my portfolio at [pyaephyowin.vercel.app](https://pyaephyowin.vercel.app). You can also explore my projects on [GitHub](https://github.com/pyaephyowinn).
