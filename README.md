@@ -4,7 +4,7 @@ I'm a passionate Full Stack Developer with around 3 years of experience in build
 
 ## 🛠️ Technologies & Tools
 
-- **Frontend**: React, Next.js, Redux, Zustand, TailwindCSS, Mantine, Chakra UI
+- **Frontend**: React, Next.js, Redux, Zustand, TailwindCSS, Mantine, Shadcn UI
 - **Backend**: Node.js, Nest.js, Express, Go, Gin, MongoDB, PostgreSQL, TypeORM
 - **Languages**: TypeScript, Python, Go
 - **Tools**: Git, Docker, Vitest, Jest, Monorepo
