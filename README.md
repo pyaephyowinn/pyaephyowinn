@@ -1,6 +1,6 @@
 # Hi, I'm Pyae Phyo Win 👋
 
-I'm a passionate Full Stack Developer with around 3 years of experience in building scalable and high-performance web applications. My expertise lies in modern frontend technologies like **React**, **Next.js**, and **TypeScript**, and I also have strong backend development skills using **Node.js**, **Nest.js**, and **Go**. I enjoy working on both the client and server sides of applications, ensuring seamless user experiences and robust backend systems.
+I'm a passionate Full Stack Developer with over 2+ years of experience in building scalable and high-performance web applications. My expertise lies in modern frontend technologies like **React**, **Next.js**, and **TypeScript**, and I also have strong backend development skills using **Node.js**, **Nest.js**, and **Go**. I enjoy working on both the client and server sides of applications, ensuring seamless user experiences and robust backend systems.
 
 ## 🛠️ Technologies & Tools
 
