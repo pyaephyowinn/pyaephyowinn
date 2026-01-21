@@ -6,3 +6,4 @@ Feel free to reach out to me via [LinkedIn](https://www.linkedin.com/in/pyae-phy
 Recent works:
 
 - [MM Trails](https://www.mmtrails.com/)
+- <a href="https://www.mmtrails.com/" target="_blank" rel="noopener noreferrer">MM Trails</a>
