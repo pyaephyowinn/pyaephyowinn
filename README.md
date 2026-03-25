@@ -5,4 +5,5 @@ Feel free to reach out to me via [LinkedIn](https://www.linkedin.com/in/pyae-phy
 
 Recent works:
 
+- [MiniMax Visualizer](https://minimax-visualizer.vercel.app/)
 - [MM Trails](https://www.mmtrails.com/)
