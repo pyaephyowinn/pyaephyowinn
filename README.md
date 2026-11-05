@@ -5,4 +5,5 @@ Feel free to reach out to me via [LinkedIn](https://www.linkedin.com/in/pyae-phy
 
 Recent works:
 - [Biz Copilot](https://bizcopilot.triumsoft.net/)
+- [Triumsoft POS](https://pos.triumsoft.net/)
 - [MM Trails](https://www.mmtrails.com/)
