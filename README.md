@@ -8,3 +8,4 @@ Recent works:
 - [Biz Copilot](https://bizcopilot.triumsoft.net/)
 - [Triumsoft POS](https://pos.triumsoft.net/)
 - [MM Trails](https://www.mmtrails.com/)
+- [Sleight](https://chromewebstore.google.com/detail/sleight-%E2%80%94-session-switche/hnpganpikcekoecoeekdopjompljjndo?authuser=0&hl=en-GB)
