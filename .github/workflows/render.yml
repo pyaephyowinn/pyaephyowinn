@@ -2,7 +2,7 @@ name: Print the paper
 
 on:
   push:
-    branches: [main, newspaper-readme] # the preview branch prints too, so the Linux render can be checked before merging
+    branches: [main]
     paths:
       - content.yml
       - 'src/**'
