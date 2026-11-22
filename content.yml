@@ -21,7 +21,7 @@ profile:
   paragraphs:
     - "Pyae Phyo Win is a full-stack software engineer who has spent more than four years building web apps that real businesses run on: CRMs, point-of-sale systems, and order tools for shops that sell online. Lately the work has moved into the AI features inside those apps, including RAG, LLM assistants and data tooling."
     - When the day’s work ships, the side projects start. They include a UI library dressed as a newspaper and a browser extension built after logging out one time too many.
-  quote: "TODO: a line in your own words about what you love about building things"
+  quote: Code is the only thing I know how to turn into money. Luckily, it’s also what I’d do for fun.
   more: Full story at pyaephyowin.com →
 
 letters:
@@ -30,16 +30,13 @@ letters:
     a: Builds full-stack web apps and the AI features inside them.
   - q: Why does everything end up looking like a newspaper?
     from: Concerned Designer
-    a: "TODO: your answer"
+    a: A README is a developer’s front page. This one just took it literally.
   - q: What’s the stack?
     from: Fellow Developer
-    a: "TypeScript and JavaScript, TODO: plus your main tools"
+    a: TypeScript and JavaScript, with Go on the back end and RAG for the AI features.
 
 currently:
-  - { label: Building, text: "TODO: what you're working on" }
-  - { label: Learning, text: "TODO: something new" }
-  - { label: Reading, text: "TODO: a book or blog" }
-  - { label: Next, text: "TODO: the next side project" }
+  - { label: Building, text: CRM software }
 
 sections:
   projects: { title: Side Projects, tagline: "Built for fun, shipped anyway" }
