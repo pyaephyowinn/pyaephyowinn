@@ -92,8 +92,9 @@ Tone: playful tabloid headlines, plain and accurate story text. The project one-
 - The answer to "Why does everything end up looking like a newspaper?".
 - Main tools besides TypeScript/JavaScript, for "What's the stack?".
 - The four Currently lines.
+- The volume start year (the year Pyae started building professionally). The sample's "IV" fits 2022, which is the default until Pyae confirms.
 
-The build can go ahead with these as placeholders. Publishing to `main` waits until they're filled. The renderer should **fail the build** if any placeholder marker is left in `content.yml`.
+The build can go ahead with these as placeholders. Publishing to `main` waits until they're filled. The renderer should **fail the build** if any placeholder marker is left in `content.yml`, in CI and on `main`. A **draft mode** for local previews and the `newspaper-readme` branch renders placeholders highlighted instead.
 
 ## My calls (Claude's, not yet confirmed by Pyae)
 
@@ -112,8 +113,9 @@ The build can go ahead with these as placeholders. Publishing to `main` waits un
 - **Alt text:** every image gets meaningful alt text that carries its story, not just "masthead".
 - **Issue number** = ISO week of the year. **Date** = the date of the render. **Volume** = years since a start year set in `content.yml`, shown as a Roman numeral. The sample's "IV" assumes a start year that gives 4. Pyae should set the real one.
 - **Avatar:** fetched at render time from `https://github.com/pyaephyowinn.png`, grayscale + halftone treatment as in the sample. If the fetch fails, fall back to a committed copy.
-- **Weather:** the share of bytes by language across Pyae's **public, non-fork, owned** repos, from the GitHub API using the Action's token. Show the top two by name plus "Other". The forecast sentence picks wording from the top languages: "mostly X, with spells of Y, and a high chance of side projects."
+- **Weather:** the share of bytes by language across Pyae's **public, non-fork, owned** repos, from the GitHub API using the Action's token. Leave out markup and style languages (HTML, CSS, Less, EJS and similar) so the forecast never says "spells of CSS". Show the top two by name plus "Other". The forecast sentence picks wording from the top languages: "mostly X, with spells of Y, and a high chance of side projects."
 - **Schedule:** every Monday 00:00 UTC, plus on push and manual dispatch. The Action commits regenerated images only when they changed. Cache busting uses a content hash or the date in the image URL, written into `README.md` by the renderer.
+- **Testing the schedule:** GitHub runs scheduled workflows only from the default branch, so the weekly run can only be checked after merging to `main`. Before that, test it with manual dispatch.
 - **Failure handling:** if rendering fails, the Action fails without committing, so the last good images stay live.
 - **The old README** content is replaced. The current file is in git history.
 - **Work happens on the branch `newspaper-readme`** in a local clone at `~/dev/pyaephyowinn`. Nothing is pushed or merged to `main` without Pyae's go-ahead.
