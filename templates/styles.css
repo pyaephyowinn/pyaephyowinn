@@ -1,0 +1,84 @@
+/* The Pyae Phyo Times. Ported from docs/superpowers/specs/assets/2026-11-23-newspaper-readme-sample.html.
+   Every [data-piece] becomes one PNG. Each piece carries a 2px ink rule on its top and bottom edge,
+   so the ~6px gap GitHub leaves between rows reads as a double rule (see docs/superpowers/notes/seam-spike.md). */
+/*FONTS*/
+:root { --paper:#f4ecd8; --paper2:#e9dfc4; --ink:#1a1a1a; --muted:#5a5246; }
+* { box-sizing:border-box; }
+html, body { margin:0; padding:0; background:#fff; }
+body { width:888px; color:var(--ink); font-family:'Old Standard TT',Georgia,serif; -webkit-font-smoothing:antialiased; }
+.row { display:flex; align-items:stretch; width:888px; }
+.piece { position:relative; background-color:var(--paper);
+  background-image:radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px); background-size:3px 3px;
+  border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); }
+.row > .piece + .piece { border-left:1px solid var(--ink); }
+.stack { display:flex; flex-direction:column; }
+.stack > .block { flex:1; }
+.stack > .block + .block { border-top:3px double var(--ink); }
+
+.kicker { font-size:10px; letter-spacing:2px; text-transform:uppercase; border-bottom:1px solid var(--ink); display:inline-block; margin-bottom:6px; }
+.hed { font-family:'Playfair Display',serif; font-weight:900; text-transform:uppercase; line-height:1.02; margin:0; }
+.dek { font-family:'Playfair Display',serif; font-style:italic; font-size:15px; margin:8px 0 10px; line-height:1.3; }
+.body { font-size:13.5px; line-height:1.55; text-align:justify; hyphens:auto; }
+.body p { margin:0 0 8px; }
+.dropcap > p:first-child::first-letter { font-family:'Playfair Display',serif; font-weight:900; float:left; font-size:46px; line-height:.85; padding:4px 6px 0 0; }
+.more { font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-top:6px; }
+figure { margin:0 0 10px; }
+figcaption { font-size:11px; font-style:italic; color:var(--muted); margin-top:4px; border-bottom:1px solid #00000022; padding-bottom:4px; }
+.draft { background:#fff3a0; padding:0 3px; }
+
+/* masthead */
+.mast { padding:14px 28px 10px; }
+.mast .ears, .mast .dateline { display:flex; justify-content:space-between; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; }
+.mast .ears { border-bottom:1px solid var(--ink); padding-bottom:5px; }
+.mast .title { text-align:center; font-family:'UnifrakturCook',serif; font-weight:700; font-size:68px; line-height:1.05; margin:6px 0 2px; }
+.mast .motto { text-align:center; font-style:italic; font-size:13px; }
+.mast .dateline { border-top:1px solid var(--ink); margin-top:8px; padding-top:5px; letter-spacing:1px; }
+
+/* lead */
+.lead { padding:16px 22px 18px 28px; }
+.lead .hed { font-size:40px; }
+.lead-grid { display:grid; grid-template-columns:150px 1fr; gap:18px; }
+.portrait { width:100%; aspect-ratio:1/1; object-fit:cover; filter:grayscale(1) contrast(1.25) sepia(.25); display:block; border:1px solid var(--ink); }
+.halftone { position:relative; }
+.halftone::after { content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(26,26,26,.35) 1px, transparent 1.3px); background-size:4px 4px; mix-blend-mode:multiply; pointer-events:none; }
+.quote { font-family:'Playfair Display',serif; font-style:italic; font-size:17px; line-height:1.3; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); padding:8px 0; margin:10px 0; text-align:center; }
+
+/* side column */
+.side .block { padding:16px 28px 16px 20px; }
+.letter { font-size:12.5px; line-height:1.45; margin:8px 0 0; }
+.letter .q { font-style:italic; }
+.letter .from { font-style:normal; }
+.letter .a { margin-top:3px; }
+.letter .a::before { content:"ED. — "; font-weight:700; letter-spacing:1px; font-size:11px; }
+.now .item { font-size:12.5px; padding:4px 0; border-bottom:1px dotted #00000055; display:grid; grid-template-columns:76px 1fr; }
+.now .item b { font-size:10px; letter-spacing:2px; text-transform:uppercase; padding-top:2px; }
+
+/* section bars */
+.section-bar { padding:6px 28px; display:flex; justify-content:space-between; align-items:baseline; }
+.section-bar b { font-family:'Playfair Display',serif; font-weight:900; font-size:18px; letter-spacing:3px; text-transform:uppercase; }
+.section-bar span { font-size:11px; font-style:italic; }
+
+/* side projects */
+.project { padding:14px 18px 16px; }
+.row > .project:first-child { padding-left:28px; }
+.row > .project:last-child { padding-right:28px; }
+.project .hed { font-size:21px; margin-bottom:10px; }
+.project .body { text-align:left; }
+.project figure svg { display:block; width:100%; background:var(--paper2); }
+
+/* business */
+.biz { padding:12px 16px 14px; }
+.row > .biz:first-child { padding-left:28px; }
+.row > .biz:last-child { padding-right:28px; }
+.biz .hed { font-size:16px; text-transform:none; }
+.biz .body { font-size:12.5px; text-align:left; margin-top:4px; }
+.biz .url { font-size:11px; font-style:italic; color:var(--muted); margin-top:6px; }
+
+/* footer */
+.classifieds, .weather { padding:12px 28px 16px; }
+.classifieds .ad { border:1px solid var(--ink); padding:8px 10px; margin-top:4px; font-size:12.5px; }
+.classifieds .ad b { font-family:'Playfair Display',serif; letter-spacing:1px; }
+.weather { font-size:12.5px; }
+.bar { display:flex; height:9px; border:1px solid var(--ink); margin:6px 0 4px; }
+.bar i { display:block; }
+.legend { font-size:11px; color:var(--muted); }
