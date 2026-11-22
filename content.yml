@@ -1,0 +1,71 @@
+# All the words on the front page of The Pyae Phyo Times.
+# Inline markup: **bold**, *italic*, _underline_. Anything containing "TODO:" blocks publishing.
+login: pyaephyowinn
+name: Pyae Phyo Win
+site: https://pyaephyowin.com
+linkedin: https://www.linkedin.com/in/pyae-phyo-win-762792246/
+startYear: 2022
+
+masthead:
+  title: The Pyae Phyo Times
+  motto: “All the code that’s fit to commit”
+  edition: Late City Edition
+  price: One ⭐
+  role: Software engineer · full stack
+
+profile:
+  kicker: Profile
+  headline: Engineer Ships Products by Day, Builds Toys by Night
+  dek: Four-plus years of production web apps, the AI features inside them, and a growing habit of making software look like something else.
+  caption: Pyae Phyo Win, at the desk.
+  paragraphs:
+    - "Pyae Phyo Win is a full-stack software engineer who has spent more than four years building web apps that real businesses run on: CRMs, point-of-sale systems, and order tools for shops that sell online. Lately the work has moved into the AI features inside those apps, including RAG, LLM assistants and data tooling."
+    - When the day’s work ships, the side projects start. They include a UI library dressed as a newspaper and a browser extension built after logging out one time too many.
+  quote: "TODO: a line in your own words about what you love about building things"
+  more: Full story at pyaephyowin.com →
+
+letters:
+  - q: What does this engineer actually do?
+    from: A Curious Reader
+    a: Builds full-stack web apps and the AI features inside them.
+  - q: Why does everything end up looking like a newspaper?
+    from: Concerned Designer
+    a: "TODO: your answer"
+  - q: What’s the stack?
+    from: Fellow Developer
+    a: "TypeScript and JavaScript, TODO: plus your main tools"
+
+currently:
+  - { label: Building, text: "TODO: what you're working on" }
+  - { label: Learning, text: "TODO: something new" }
+  - { label: Reading, text: "TODO: a book or blog" }
+  - { label: Next, text: "TODO: the next side project" }
+
+sections:
+  projects: { title: Side Projects, tagline: "Built for fun, shipped anyway" }
+  business: { title: Business & Industry, tagline: "The day job, and the shops it keeps open" }
+
+projects:
+  - id: newspapercn
+    kicker: Design
+    headline: shadcn/ui Gets the Newspaper Treatment
+    caption: The Grand Line Gazette theme.
+    body: "*newspapercn-ui* reprints shadcn/ui components in serif type and halftone ink, in a One Piece newspaper style. It comes with a Next.js blog template built on top."
+    more: Browse the gazette →
+    url: https://newspapercn-ui.vercel.app
+  - id: sleight
+    kicker: Tools · Browser
+    headline: Man Escapes Endless Log-Out Loop
+    caption: One click, another account.
+    body: Sleight saves a site’s logins as named profiles and switches between them in one click. Everything stays on your device, sources confirm.
+    more: Get it on the Chrome Web Store →
+    url: https://chromewebstore.google.com/detail/hnpganpikcekoecoeekdopjompljjndo
+
+business:
+  - { id: f2f, name: F2F CRM, body: "Contacts, leads and conversations across many channels, all under one roof.", url: "https://crm.firsttofly.com/" }
+  - { id: bizcopilot, name: BizCoPilot, body: "Orders from Messenger and Telegram now arrive in one place for shops that sell online.", url: "https://bizcopilot.triumsoft.net/" }
+  - { id: pos, name: Triumsoft POS, body: "A restaurant till you can just ask, in Myanmar, Vietnamese or English.", url: "https://pos.triumsoft.net/" }
+  - { id: mmtrails, name: MM Trails, body: "Bloggers get a subdomain of their own and start publishing.", url: "https://www.mmtrails.com/" }
+
+classifieds:
+  text: "**WANTED:** interesting problems, odd ideas, and anyone who wants to build something that looks like something else. Write to _pyaephyowin.com_ or find me on _LinkedIn_."
