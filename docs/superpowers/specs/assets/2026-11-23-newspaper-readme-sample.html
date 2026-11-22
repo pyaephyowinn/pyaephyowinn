@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample · The Pyae Phyo Times</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#f4ecd8; --paper2:#e9dfc4; --ink:#1a1a1a; --muted:#5a5246; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:#1f2328; font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+  body.dark { background:#0d1117; color:#e6edf3; }
+  .gh-top { background:#f6f8fa; border-bottom:1px solid #d0d7de; padding:12px 24px; display:flex; gap:12px; align-items:center; font-weight:600; }
+  body.dark .gh-top { background:#010409; border-color:#30363d; }
+  .gh-top .logo { width:32px;height:32px;border-radius:50%;background:#1f2328; }
+  body.dark .gh-top .logo { background:#e6edf3; }
+  .gh-top .spacer { flex:1; }
+  .gh-top button { font:inherit; font-weight:500; font-size:12px; padding:5px 12px; border-radius:6px; border:1px solid #d0d7de; background:#fff; cursor:pointer; color:inherit; }
+  body.dark .gh-top button { background:#21262d; border-color:#30363d; }
+  .page { display:grid; grid-template-columns:260px 1fr; gap:32px; max-width:1240px; margin:24px auto; padding:0 24px; }
+  .avatar { width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,#d9cfb5,#a89b7c);border:1px solid #d0d7de;display:flex;align-items:center;justify-content:center;font:900 64px 'Playfair Display',serif;color:#1a1a1a; }
+  .who h1 { margin:16px 0 0; font-size:24px; line-height:1.25; }
+  .who .login { font-size:20px; color:#59636e; font-weight:300; }
+  .who .bio { margin-top:12px; font-size:16px; }
+  .readme { border:1px solid #d0d7de; border-radius:6px; padding:24px; }
+  body.dark .readme { border-color:#30363d; }
+  .readme-label { font-size:12px; color:#59636e; margin-bottom:16px; font-family:ui-monospace,Menlo,monospace; }
+  .note { font-size:12px; background:#fff8c5; border:1px solid #d4a72c66; border-radius:6px; padding:8px 12px; margin-bottom:16px; color:#3b2300; }
+  body.dark .note { background:#bb800926; color:#e3b341; border-color:#bb800966; }
+
+  /* ---- the newspaper (each .tile = one SVG image in the real README) ---- */
+  .paper { color:var(--ink); font-family:'Old Standard TT',Georgia,serif; }
+  .tile { display:block; background:var(--paper); color:inherit; text-decoration:none; position:relative; }
+  .tile:hover { filter:brightness(0.98); }
+  .row { display:flex; gap:0; }
+  .grain { background-image: radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px); background-size:3px 3px; }
+
+  .mast { padding:14px 28px 10px; border-bottom:4px double var(--ink); }
+  .mast .ears { display:flex; justify-content:space-between; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; border-bottom:1px solid var(--ink); padding-bottom:5px; }
+  .mast .title { text-align:center; font-family:'UnifrakturCook',serif; font-size:68px; line-height:1.05; margin:6px 0 2px; }
+  .mast .motto { text-align:center; font-style:italic; font-size:13px; }
+  .mast .dateline { display:flex; justify-content:space-between; font-size:11px; letter-spacing:1px; text-transform:uppercase; border-top:1px solid var(--ink); margin-top:8px; padding-top:5px; }
+
+  .kicker { font-size:10px; letter-spacing:2px; text-transform:uppercase; border-bottom:1px solid var(--ink); display:inline-block; margin-bottom:6px; }
+  .hed { font-family:'Playfair Display',serif; font-weight:900; text-transform:uppercase; line-height:1.02; margin:0; }
+  .dek { font-family:'Playfair Display',serif; font-style:italic; font-size:15px; margin:8px 0 10px; line-height:1.3; }
+  .body { font-size:13.5px; line-height:1.55; text-align:justify; hyphens:auto; }
+  .body p { margin:0 0 8px; }
+  .body p:first-child::first-letter { font-family:'Playfair Display',serif; font-weight:900; float:left; font-size:46px; line-height:.85; padding:4px 6px 0 0; }
+  .more { font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-top:6px; }
+  .byline { font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  figure { margin:0 0 10px; }
+  figcaption { font-size:11px; font-style:italic; color:var(--muted); margin-top:4px; border-bottom:1px solid #00000022; padding-bottom:4px; }
+
+  .lead { flex:2; padding:16px 22px 18px 28px; border-right:1px solid var(--ink); }
+  .lead .hed { font-size:40px; }
+  .lead .cols { columns:2; column-gap:20px; column-rule:1px solid #00000033; }
+  .side { flex:1; display:flex; flex-direction:column; }
+  .side .tile { padding:16px 28px 16px 20px; flex:1; }
+  .side .tile + .tile { border-top:3px double var(--ink); }
+  .side .hed { font-size:22px; }
+
+  .section-bar { border-top:4px double var(--ink); border-bottom:1px solid var(--ink); padding:6px 28px; display:flex; justify-content:space-between; align-items:baseline; }
+  .section-bar b { font-family:'Playfair Display',serif; font-weight:900; font-size:18px; letter-spacing:3px; }
+  .section-bar span { font-size:11px; font-style:italic; }
+  .biz .tile { flex:1; padding:12px 16px 14px; }
+  .biz .tile + .tile { border-left:1px solid var(--ink); }
+  .biz .tile:first-child { padding-left:28px; } .biz .tile:last-child { padding-right:28px; }
+  .biz .hed { font-size:16px; text-transform:none; }
+  .biz .body { font-size:12.5px; text-align:left; margin-top:4px; }
+  .biz .body p:first-child::first-letter { all:unset; }
+  .biz .url { font-size:11px; font-style:italic; color:var(--muted); margin-top:6px; }
+
+  .foot { border-top:3px double var(--ink); }
+  .foot .tile { padding:12px 28px 16px; }
+  .classified { flex:1.4; border-right:1px solid var(--ink); }
+  .classified .ad { border:1px solid var(--ink); padding:8px 10px; margin-top:4px; font-size:12.5px; }
+  .classified .ad b { font-family:'Playfair Display',serif; letter-spacing:1px; }
+  .weather { flex:1; font-size:12.5px; }
+  .bar { display:flex; height:9px; border:1px solid var(--ink); margin:6px 0 4px; }
+  .bar i { display:block; }
+
+  /* "how it's built" overlay */
+  body.xray .tile { outline:2px dashed #cf222e; outline-offset:-4px; }
+  body.xray .tile::after { content:attr(data-svg); position:absolute; top:6px; right:8px; font:600 10px ui-monospace,Menlo,monospace; background:#cf222e; color:#fff; padding:2px 6px; border-radius:4px; }
+  @media (max-width:900px){ .page{grid-template-columns:1fr} .avatar{width:120px;height:120px;font-size:32px} }
+
+  .portrait { width:100%; aspect-ratio:1/1; object-fit:cover; filter:grayscale(1) contrast(1.25) sepia(.25); display:block; border:1px solid var(--ink); }
+  .halftone { position:relative; }
+  .halftone::after { content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(26,26,26,.35) 1px, transparent 1.3px); background-size:4px 4px; mix-blend-mode:multiply; pointer-events:none; }
+  .lead-grid { display:grid; grid-template-columns:150px 1fr; gap:18px; }
+  .quote { font-family:'Playfair Display',serif; font-style:italic; font-size:17px; line-height:1.3; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); padding:8px 0; margin:10px 0; text-align:center; }
+  .glance { padding:16px 28px 16px 20px; }
+  .glance dl { margin:0; font-size:12.5px; }
+  .glance dt { font-size:10px; letter-spacing:2px; text-transform:uppercase; margin-top:10px; border-bottom:1px solid #00000033; }
+  .glance dd { margin:3px 0 0; }
+  .index { padding:14px 28px 16px 20px; border-top:3px double var(--ink); font-size:12.5px; }
+  .index div { display:flex; justify-content:space-between; border-bottom:1px dotted #00000055; padding:3px 0; }
+  .projects .tile { flex:1; padding:14px 18px 16px; }
+  .projects .tile + .tile { border-left:1px solid var(--ink); }
+  .projects .tile:first-child { padding-left:28px; } .projects .tile:last-child { padding-right:28px; }
+  .projects .hed { font-size:21px; }
+  .projects .body { text-align:left; }
+  .projects .body p:first-child::first-letter { all:unset; }
+  .projects figure svg { background:var(--paper2); }
+  .draft { background:#fff3a0; padding:0 3px; }
+  body.dark .draft { background:#fff3a0; }
+
+  .letter { font-size:12.5px; line-height:1.45; margin:8px 0 0; }
+  .letter .q { font-style:italic; }
+  .letter .a { margin-top:3px; }
+  .letter .a::before { content:"ED. — "; font-weight:700; letter-spacing:1px; font-size:11px; }
+  .now div { font-size:12.5px; padding:4px 0; border-bottom:1px dotted #00000055; display:grid; grid-template-columns:76px 1fr; justify-content:initial; }
+  .now b { font-size:10px; letter-spacing:2px; text-transform:uppercase; padding-top:2px; }
+</style>
+</head><body>
+<div class="gh-top"><div class="logo"></div><span>github.com/pyaephyowinn</span><span class="spacer"></span>
+  <button onclick="document.body.classList.toggle('xray')">Show how it's built</button>
+  <button onclick="document.body.classList.toggle('dark')">Toggle GitHub dark mode</button>
+</div>
+
+<div class="page">
+  <aside class="who">
+    <div class="avatar">PW</div>
+    <h1>Pyae Phyo Win</h1>
+    <div class="login">pyaephyowinn</div>
+    <div class="bio">Passionate Engineer</div>
+  </aside>
+
+  <main>
+    <div class="readme">
+      <div class="readme-label">pyaephyowinn / README.md</div>
+      <div class="note"><b>Sample v6.</b> Side Projects is back above Business &amp; Industry. The side column now has Letters to the Editor and Currently. The lead story is now about you, and the three side projects get equal billing. <span class="draft">Highlighted</span> text is where I need your words or facts. In the real README, each boxed piece is an image with its own link. Click <i>Show how it's built</i> to see the pieces.</div>
+
+      <div class="paper">
+  <!-- MASTHEAD -->
+  <a class="tile grain mast" data-svg="masthead.svg · auto-updated weekly" href="https://pyaephyowin.com">
+    <div class="ears"><span>Vol. IV · No. 48</span><span>Late City Edition</span><span>Price: One ⭐</span></div>
+    <div class="title">The Pyae Phyo Times</div>
+    <div class="motto">“All the code that’s fit to commit”</div>
+    <div class="dateline"><span>Monday, November 23, 2026</span><span>Software engineer · full stack</span><span>github.com/pyaephyowinn</span></div>
+  </a>
+
+  <!-- FRONT PAGE: PROFILE -->
+  <div class="row">
+    <a class="tile grain lead" data-svg="lead-profile.svg → pyaephyowin.com" href="https://pyaephyowin.com">
+      <div class="kicker">Profile</div>
+      <h2 class="hed">Engineer Ships Products by Day, Builds Toys by Night</h2>
+      <div class="dek">Four-plus years of production web apps, the AI features inside them, and a growing habit of making software look like something else.</div>
+      <div class="lead-grid">
+        <figure>
+          <div class="halftone"><img class="portrait" src="https://github.com/pyaephyowinn.png?size=300" alt=""></div>
+          <figcaption>Pyae Phyo Win, at the desk.</figcaption>
+        </figure>
+        <div class="body">
+          <p>Pyae Phyo Win is a full-stack software engineer who has spent more than four years building web apps that real businesses run on: CRMs, point-of-sale systems, and order tools for shops that sell online. Lately the work has moved into the AI features inside those apps, including RAG, LLM assistants and data tooling.</p>
+          <p>When the day’s work ships, the side projects start. They include a UI library dressed as a newspaper and a browser extension built after logging out one time too many.</p>
+          <div class="quote">“<span class="draft">A line in your own words: what you love about building things.</span>”</div>
+          <div class="more">Full story at pyaephyowin.com →</div>
+        </div>
+      </div>
+    </a>
+
+    <div class="side">
+      <div class="tile grain glance" data-svg="letters.svg (no link)">
+        <div class="kicker">Letters to the Editor</div>
+        <div class="letter"><div class="q">“What does this engineer actually do?” <span style="font-style:normal">— A Curious Reader</span></div><div class="a">Builds full-stack web apps and the AI features inside them.</div></div>
+        <div class="letter"><div class="q">“Why does everything end up looking like a newspaper?” <span style="font-style:normal">— Concerned Designer</span></div><div class="a"><span class="draft">Your answer.</span></div></div>
+        <div class="letter"><div class="q">“What’s the stack?” <span style="font-style:normal">— Fellow Developer</span></div><div class="a">TypeScript and JavaScript, <span class="draft">plus your main tools</span>.</div></div>
+      </div>
+      <div class="tile grain index now" data-svg="currently.svg (hand-edited)">
+        <div class="kicker">Currently</div>
+        <div><b>Building</b><span class="draft">what you're working on</span></div>
+        <div><b>Learning</b><span class="draft">something new</span></div>
+        <div><b>Reading</b><span class="draft">a book or blog</span></div>
+        <div><b>Next</b><span class="draft">the next side project</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDE PROJECTS -->
+  <div class="tile grain section-bar" data-svg="section-projects.svg (no link)"><b>SIDE PROJECTS</b><span>Built for fun, shipped anyway</span></div>
+  <div class="row projects">
+    <a class="tile grain" data-svg="story-gazette.svg → newspapercn-ui" href="https://newspapercn-ui.vercel.app">
+      <div class="kicker">Design</div>
+      <h3 class="hed">shadcn/ui Gets the Newspaper Treatment</h3>
+      <figure>
+        <svg viewBox="0 0 240 110" width="100%" style="display:block">
+          <defs><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.1" fill="#1a1a1a" opacity=".55"/></pattern></defs>
+          <rect x="30" y="12" width="180" height="86" fill="#f4ecd8" stroke="#1a1a1a" stroke-width="2"/>
+          <rect x="30" y="12" width="180" height="20" fill="url(#dots)"/>
+          <line x1="30" y1="32" x2="210" y2="32" stroke="#1a1a1a" stroke-width="2"/>
+          <text x="120" y="26" text-anchor="middle" font-family="Playfair Display" font-weight="900" font-size="11">&lt;Card /&gt;</text>
+          <rect x="44" y="42" width="120" height="5" fill="#1a1a1a" opacity=".7"/><rect x="44" y="52" width="150" height="5" fill="#1a1a1a" opacity=".4"/>
+          <rect x="44" y="70" width="70" height="18" fill="#1a1a1a"/><text x="79" y="82" text-anchor="middle" fill="#f4ecd8" font-family="Old Standard TT" font-weight="700" font-size="10" letter-spacing="1">BUTTON</text>
+          <rect x="122" y="70" width="70" height="18" fill="none" stroke="#1a1a1a" stroke-width="1.5"/><text x="157" y="82" text-anchor="middle" font-family="Old Standard TT" font-size="10" font-style="italic">outline</text>
+        </svg>
+        <figcaption>The Grand Line Gazette theme.</figcaption>
+      </figure>
+      <div class="body"><p><i>newspapercn-ui</i> reprints shadcn/ui components in serif type and halftone ink, in a One Piece newspaper style. It comes with a Next.js blog template built on top.</p></div>
+      <div class="more">Browse the gazette →</div>
+    </a>
+    <a class="tile grain" data-svg="story-sleight.svg → Chrome Web Store" href="https://chromewebstore.google.com/detail/hnpganpikcekoecoeekdopjompljjndo">
+      <div class="kicker">Tools · Browser</div>
+      <h3 class="hed">Man Escapes Endless Log-Out Loop</h3>
+      <figure>
+        <svg viewBox="0 0 240 110" width="100%" style="display:block">
+          <rect x="30" y="14" width="180" height="84" fill="#f4ecd8" stroke="#1a1a1a" stroke-width="2"/>
+          <text x="44" y="32" font-family="Playfair Display" font-weight="900" font-size="11">Profiles</text>
+          <line x1="44" y1="38" x2="196" y2="38" stroke="#1a1a1a"/>
+          <rect x="44" y="45" width="152" height="15" fill="#1a1a1a"/><text x="52" y="56" fill="#f4ecd8" font-family="Old Standard TT" font-size="10" font-weight="700">● admin@work</text>
+          <text x="52" y="74" font-family="Old Standard TT" font-size="10">○ test-user</text>
+          <text x="52" y="90" font-family="Old Standard TT" font-size="10">○ personal</text>
+        </svg>
+        <figcaption>One click, another account.</figcaption>
+      </figure>
+      <div class="body"><p>Sleight saves a site’s logins as named profiles and switches between them in one click. Everything stays on your device, sources confirm.</p></div>
+      <div class="more">Get it on the Chrome Web Store →</div>
+    </a>
+  </div>
+<!-- BUSINESS -->
+        <div class="tile grain section-bar" data-svg="section-business.svg (no link)"><b>BUSINESS &amp; INDUSTRY</b><span>The day job, and the shops it keeps open</span></div>
+        <div class="row biz">
+          <a class="tile grain" data-svg="biz-f2f.svg" href="https://crm.firsttofly.com/">
+            <h4 class="hed">F2F CRM</h4>
+            <div class="body"><p>Contacts, leads and conversations across many channels, all under one roof.</p></div>
+            <div class="url">crm.firsttofly.com →</div>
+          </a>
+          <a class="tile grain" data-svg="biz-bizcopilot.svg" href="https://bizcopilot.triumsoft.net/">
+            <h4 class="hed">BizCoPilot</h4>
+            <div class="body"><p>Orders from Messenger and Telegram now arrive in one place for shops that sell online.</p></div>
+            <div class="url">bizcopilot.triumsoft.net →</div>
+          </a>
+          <a class="tile grain" data-svg="biz-pos.svg" href="https://pos.triumsoft.net/">
+            <h4 class="hed">Triumsoft POS</h4>
+            <div class="body"><p>A restaurant till you can just ask, in Myanmar, Vietnamese or English.</p></div>
+            <div class="url">pos.triumsoft.net →</div>
+          </a>
+          <a class="tile grain" data-svg="biz-mmtrails.svg" href="https://www.mmtrails.com/">
+            <h4 class="hed">MM Trails</h4>
+            <div class="body"><p>Bloggers get a subdomain of their own and start publishing.</p></div>
+            <div class="url">mmtrails.com →</div>
+          </a>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="row foot">
+          <a class="tile grain classified" data-svg="classifieds.svg → pyaephyowin.com" href="https://pyaephyowin.com">
+            <div class="kicker">Classifieds</div>
+            <div class="ad"><b>WANTED:</b> interesting problems, odd ideas, and anyone who wants to build something that looks like something else. Write to <u>pyaephyowin.com</u> or find me on <u>LinkedIn</u>.</div>
+          </a>
+          <div class="tile grain weather" data-svg="weather.svg · auto-updated weekly">
+            <div class="kicker">Weather</div>
+            <div><b>Forecast:</b> mostly JavaScript, with spells of TypeScript and a high chance of side projects.</div>
+            <div class="bar"><i style="width:76%;background:#1a1a1a"></i><i style="width:19%;background:#7a705e"></i><i style="flex:1;background:#d3c7a8"></i></div>
+            <div style="font-size:11px;color:var(--muted)">JavaScript 76% · TypeScript 19% · Other 5%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
