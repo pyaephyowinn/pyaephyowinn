@@ -1,0 +1,58 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { loadContent } from '../src/content.js';
+import { editionInfo } from '../src/edition.js';
+import { ROWS } from '../src/layout.js';
+import { buildReadme, altFor } from '../src/readme.js';
+
+const content = loadContent('content.yml', { draft: true });
+const model = {
+  content,
+  edition: editionInfo(new Date('2026-11-23T00:00:00Z'), content.startYear),
+  weather: { top: [{ name: 'JavaScript', pct: 76 }, { name: 'TypeScript', pct: 19 }], otherPct: 5, forecast: 'mostly JavaScript, with spells of TypeScript and a high chance of side projects.' },
+  avatar: '',
+};
+const pieces = ROWS.flat().map(({ id }) => ({ id, file: `${id}.abcdef12.png`, width: 100, height: 100, bytes: 1 }));
+const readme = buildReadme(pieces, model);
+const imgTag = (id) => readme.match(new RegExp(`<img src="img/${id}\\.[^"]+"[^>]*>`))[0];
+
+test('links each target once', () => {
+  assert.equal(readme.split('<a href="https://pos.triumsoft.net/">').length - 1, 1);
+  for (const id of ['side', 'weather', 'projects-bar', 'business-bar']) {
+    assert.ok(!new RegExp(`<a [^>]*><img src="img/${id}\\.`).test(readme), id);
+  }
+  assert.ok(readme.includes('<a href="https://pyaephyowin.com"><img src="img/masthead.'));
+});
+
+test('widths match spans', () => {
+  assert.match(imgTag('lead'), /width="66.67%"/);
+  assert.match(imgTag('weather'), /width="41.67%"/);
+  assert.match(imgTag('masthead'), /width="100%"/);
+});
+
+test('alt carries the story', () => {
+  const alt = altFor('project-sleight', model);
+  assert.ok(alt.includes('Man Escapes Endless Log-Out Loop'));
+  assert.ok(alt.includes('named profiles'));
+  assert.equal(altFor('masthead', model), 'The Pyae Phyo Times. Vol. IV, No. 48. Monday, November 23, 2026.');
+  assert.ok(!altFor('classifieds', model).includes('**'));
+});
+
+test('text footer', () => {
+  const last = readme.trim().split('\n').pop();
+  assert.ok(last.includes('https://pyaephyowin.com'));
+  assert.ok(last.includes('https://www.linkedin.com/in/pyae-phyo-win-762792246/'));
+  assert.ok(last.includes('pyaephyowin.com</a> · <a'));
+});
+
+test('hashed paths', () => {
+  const srcs = [...readme.matchAll(/src="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(srcs.length, 13);
+  for (const s of srcs) assert.match(s, /^img\/[a-z0-9-]+\.[0-9a-f]{8}\.png$/);
+});
+
+test('rows join without whitespace', () => {
+  const paper = readme.match(/<p>([\s\S]*?)<\/p>/)[1];
+  assert.ok(!/>\s+</.test(paper));
+  assert.equal(paper.split('<br>').length, ROWS.length);
+});
