@@ -335,5 +335,5 @@ The workflow:
 
 - [ ] **Step 1:** Ask Pyae for the `TODO:` texts (the quote, the newspaper answer, the main tools, the four Currently lines) and the real `startYear`. Put them in `content.yml`, rewording them into the newspaper voice only if Pyae asks.
 - [ ] **Step 2:** Run `GITHUB_TOKEN=$(gh auth token) npm run render`. Expected: exit 0, 13 PNGs in `img/`, and `README.md` rewritten.
-- [ ] **Step 3:** Commit with the message `feat: first edition of The Pyae Phyo Times`. Push the branch, and have Pyae look at `README.md` on the branch on github.com in light and dark mode, on desktop and on a phone.
-- [ ] **Step 4:** With Pyae's go-ahead, merge to `main`. Run the workflow with `gh workflow run render.yml`. Expected: the run succeeds, makes no commit (the images haven't changed), and github.com/pyaephyowinn shows the paper.
+- [ ] **Step 3:** Commit with the message `feat: first edition of The Pyae Phyo Times`. Push the branch (with Pyae's OK). The workflow also runs on `newspaper-readme`, so CI re-renders on Linux and commits those images to the branch. Have Pyae look at **that** `README.md` on github.com, in light and dark mode, on desktop and on a phone. That is the version that goes live.
+- [ ] **Step 4:** With Pyae's go-ahead, merge to `main` and pull the branch first, so the CI-rendered images are included. The merge triggers the workflow on `main`. Expected: the run succeeds, makes no commit or only a date-only reprint, and github.com/pyaephyowinn shows the paper. Afterwards, remove `newspaper-readme` from the workflow's push branches.

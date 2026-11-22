@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import YAML from 'yaml';
+import { ROWS } from './layout.js';
 
 const MARKER = 'TODO:';
 
@@ -38,6 +39,20 @@ function validate(data) {
     items.forEach((item, i) => fields.forEach((f) => missing(item?.[f]) && errors.push(`${list}.${i}.${f}`)));
   }
   if (errors.length) throw new Error(`content.yml is missing required fields: ${errors.join(', ')}`);
+  checkSlots(data, 'projects', 'project-');
+  checkSlots(data, 'business', 'biz-');
+}
+
+/** Every project/business entry needs a place on the page (src/layout.js), and every place needs an entry. */
+function checkSlots(data, list, prefix) {
+  const slots = ROWS.flat().map((p) => p.id).filter((id) => id.startsWith(prefix)).map((id) => id.slice(prefix.length));
+  const ids = data[list].map((x) => x.id);
+  const extra = ids.filter((id) => !slots.includes(id));
+  const absent = slots.filter((id) => !ids.includes(id));
+  if (extra.length || absent.length) {
+    throw new Error(`content.yml ${list} must match the page layout (src/layout.js): `
+      + [extra.length && `no slot for ${extra.join(', ')}`, absent.length && `missing ${absent.join(', ')}`].filter(Boolean).join('; '));
+  }
 }
 
 /** Load and validate content.yml. Strict mode (draft: false) refuses any placeholder. */

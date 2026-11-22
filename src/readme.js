@@ -2,9 +2,9 @@ import { ROWS } from './layout.js';
 import { urlLabel } from './page.js';
 
 const plain = (s) => String(s).replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1').replace(/(^|[\s(])_(.+?)_(?=$|[\s.,;:!?)])/g, '$1$2');
-const attr = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const attr = (s) => String(s).replace(/\s+/g, ' ').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const end = (s) => (/[.!?…”]$/.test(s) ? s : `${s}.`);
-const join = (...parts) => parts.filter(Boolean).map((p) => end(plain(p).trim())).join(' ');
+const join = (...parts) => parts.filter(Boolean).map((p) => end(plain(p).replace(/\s+/g, ' ').trim())).join(' ');
 
 /** Where each piece links to, or null when it has no link of its own. */
 export function linkFor(id, { content: c }) {

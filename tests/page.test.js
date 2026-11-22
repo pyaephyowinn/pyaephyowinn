@@ -43,9 +43,13 @@ test('business url label', () => {
 });
 
 test('draft highlights placeholders', () => {
-  const html = renderPage(model(), { draft: true });
+  const html = renderPage(model((c) => {
+    c.profile.quote = 'TODO: quote';
+    c.letters[2].a = 'TypeScript, TODO: tools';
+    c.currently[0].text = 'TODO: building';
+  }), { draft: true });
   const hits = html.split('TODO:').length - 1;
-  assert.ok(hits >= 6);
+  assert.ok(hits >= 3);
   assert.equal(html.split('<span class="draft">TODO:').length - 1, hits);
 });
 

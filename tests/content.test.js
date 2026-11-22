@@ -11,7 +11,12 @@ test('finds nested placeholders', () => {
 });
 
 test('strict load throws listing paths', () => {
-  assert.throws(() => loadContent('content.yml', { draft: false }), (e) => {
+  const data = YAML.parse(readFileSync('content.yml', 'utf8'));
+  data.profile.quote = 'TODO: a quote';
+  data.currently[0].text = 'TODO: something';
+  const path = join(mkdtempSync(join(tmpdir(), 'content-')), 'content.yml');
+  writeFileSync(path, YAML.stringify(data));
+  assert.throws(() => loadContent(path, { draft: false }), (e) => {
     assert.match(e.message, /profile\.quote/);
     assert.match(e.message, /currently\.0\.text/);
     return true;
@@ -31,6 +36,19 @@ test('rejects missing required field', () => {
   const path = join(mkdtempSync(join(tmpdir(), 'content-')), 'content.yml');
   writeFileSync(path, YAML.stringify(data));
   assert.throws(() => loadContent(path, { draft: true }), /\bsite\b/);
+});
+
+test('rejects projects and businesses the layout has no slot for', () => {
+  const base = YAML.parse(readFileSync('content.yml', 'utf8'));
+  const dir = mkdtempSync(join(tmpdir(), 'content-'));
+  const extra = structuredClone(base);
+  extra.projects.push({ ...extra.projects[0], id: 'third' });
+  writeFileSync(join(dir, 'a.yml'), YAML.stringify(extra));
+  assert.throws(() => loadContent(join(dir, 'a.yml'), { draft: true }), /projects.*third/);
+  const renamed = structuredClone(base);
+  renamed.business[0].id = 'acme';
+  writeFileSync(join(dir, 'b.yml'), YAML.stringify(renamed));
+  assert.throws(() => loadContent(join(dir, 'b.yml'), { draft: true }), /business.*acme/);
 });
 
 test('no minimax', () => {

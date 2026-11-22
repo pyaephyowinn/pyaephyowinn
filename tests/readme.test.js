@@ -51,6 +51,15 @@ test('hashed paths', () => {
   for (const s of srcs) assert.match(s, /^img\/[a-z0-9-]+\.[0-9a-f]{8}\.png$/);
 });
 
+test('multi-line content stays on one line', () => {
+  const c = structuredClone(content);
+  c.profile.paragraphs[0] = 'First line.\n\nSecond paragraph.';
+  const out = buildReadme(pieces, { ...model, content: c });
+  const paper = out.match(/<p>([\s\S]*?)<\/p>/)[1];
+  assert.ok(!paper.includes('\n'));
+  assert.ok(altFor('lead', { ...model, content: c }).includes('First line. Second paragraph.'));
+});
+
 test('rows join without whitespace', () => {
   const paper = readme.match(/<p>([\s\S]*?)<\/p>/)[1];
   assert.ok(!/>\s+</.test(paper));
