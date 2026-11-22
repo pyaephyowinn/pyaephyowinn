@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/pyaephyowinn/pyaephyowinn#readme",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
     "playwright": "^1.65.1",
