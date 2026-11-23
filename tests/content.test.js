@@ -12,13 +12,13 @@ test('finds nested placeholders', () => {
 
 test('strict load throws listing paths', () => {
   const data = YAML.parse(readFileSync('content.yml', 'utf8'));
-  data.profile.quote = 'TODO: a quote';
-  data.currently[0].text = 'TODO: something';
+  data.about.text = 'TODO: a bio';
+  data.projects[1].body = 'TODO: something';
   const path = join(mkdtempSync(join(tmpdir(), 'content-')), 'content.yml');
   writeFileSync(path, YAML.stringify(data));
   assert.throws(() => loadContent(path, { draft: false }), (e) => {
-    assert.match(e.message, /profile\.quote/);
-    assert.match(e.message, /currently\.0\.text/);
+    assert.match(e.message, /about\.text/);
+    assert.match(e.message, /projects\.1\.body/);
     return true;
   });
 });

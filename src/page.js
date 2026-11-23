@@ -49,26 +49,13 @@ function pieces(model, t) {
     <div class="title">${t(c.masthead.title)}</div>
     <div class="motto">${t(c.masthead.motto)}</div>
     <div class="dateline"><span>${escapeHtml(e.dateLabel)}</span><span>${t(c.masthead.role)}</span><span>github.com/${escapeHtml(c.login)}</span></div>`;
-  p.lead = `
-    <div class="kicker">${t(c.profile.kicker)}</div>
-    <h2 class="hed">${t(c.profile.headline)}</h2>
-    <div class="dek">${t(c.profile.dek)}</div>
-    <div class="lead-grid">
-      <figure><div class="halftone"><img class="portrait" src="${avatar}" alt=""></div><figcaption>${t(c.profile.caption)}</figcaption></figure>
-      <div class="body dropcap">
-        ${c.profile.paragraphs.map((x) => `<p>${t(x)}</p>`).join('')}
-        <div class="quote">“${t(c.profile.quote)}”</div>
-        <div class="more">${t(c.profile.more)}</div>
-      </div>
-    </div>`;
-  p.side = `
-    <div class="block">
-      <div class="kicker">Letters to the Editor</div>
-      ${c.letters.map((l) => `<div class="letter"><div class="q">“${t(l.q)}” <span class="from">— ${t(l.from)}</span></div><div class="a">${t(l.a)}</div></div>`).join('')}
-    </div>
-    <div class="block now">
-      <div class="kicker">Currently</div>
-      ${c.currently.map((x) => `<div class="item"><b>${t(x.label)}</b><span>${t(x.text)}</span></div>`).join('')}
+  p.about = `
+    <div class="halftone"><img class="portrait" src="${avatar}" alt=""></div>
+    <div>
+      <div class="kicker">${t(c.about.kicker)}</div>
+      <div class="byline"><h2 class="hed">${t(c.name)}</h2><span class="role">${t(c.about.role)}</span></div>
+      <div class="body"><p>${t(c.about.text)}</p></div>
+      <div class="more">${t(c.about.more)}</div>
     </div>`;
   const stat = (n, label, unit = '') => `<div><span class="n">${n}${unit ? `<small>${unit}</small>` : ''}</span><b>${label}</b></div>`;
   p.activity = `
@@ -109,7 +96,7 @@ function pieces(model, t) {
   return p;
 }
 
-const CLASS = (id) => id === 'masthead' ? 'mast' : id === 'side' ? 'side stack' : id.endsWith('-bar') ? 'section-bar'
+const CLASS = (id) => id === 'masthead' ? 'mast' : id.endsWith('-bar') ? 'section-bar'
   : id.startsWith('project-') ? 'project' : id.startsWith('biz-') ? 'biz' : id;
 
 /** The whole front page as one HTML document; every [data-piece] is screenshotted on its own. */
@@ -120,5 +107,5 @@ export function renderPage(model, { draft = false } = {}) {
     if (p[id] == null) throw new Error(`no template for piece ${id}`);
     return `<section class="piece ${CLASS(id)}" data-piece="${id}" style="flex:0 0 ${span * SPAN_PX}px;width:${span * SPAN_PX}px">${p[id]}</section>`;
   }).join('')}</div>`).join('\n');
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Pyae Phyo Times</title><style>${css()}</style></head><body>${rows}</body></html>`;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>${escapeHtml(model.content.masthead.title)}</title><style>${css()}</style></head><body>${rows}</body></html>`;
 }

@@ -7,14 +7,11 @@ const MARKER = 'TODO:';
 const REQUIRED = [
   'login', 'name', 'site', 'linkedin',
   'masthead.title', 'masthead.motto', 'masthead.edition', 'masthead.price', 'masthead.role',
-  'profile.kicker', 'profile.headline', 'profile.dek', 'profile.caption', 'profile.paragraphs', 'profile.quote', 'profile.more',
-  'letters', 'currently',
+  'about.kicker', 'about.role', 'about.text', 'about.more',
   'sections.projects.title', 'sections.projects.tagline', 'sections.business.title', 'sections.business.tagline',
   'projects', 'business', 'classifieds.text',
 ];
 const ITEM_FIELDS = {
-  letters: ['q', 'from', 'a'],
-  currently: ['label', 'text'],
   projects: ['id', 'kicker', 'headline', 'caption', 'body', 'more', 'url'],
   business: ['id', 'name', 'body', 'url'],
 };

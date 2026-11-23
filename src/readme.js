@@ -9,7 +9,7 @@ const join = (...parts) => parts.filter(Boolean).map((p) => end(plain(p).replace
 
 /** Where each piece links to, or null when it has no link of its own. */
 export function linkFor(id, { content: c }) {
-  if (['masthead', 'lead', 'classifieds'].includes(id)) return c.site;
+  if (['masthead', 'about', 'classifieds'].includes(id)) return c.site;
   if (id === 'activity') return `https://github.com/${c.login}`;
   if (id.startsWith('project-')) return c.projects.find((p) => `project-${p.id}` === id)?.url ?? null;
   if (id.startsWith('biz-')) return c.business.find((b) => `biz-${b.id}` === id)?.url ?? null;
@@ -19,11 +19,7 @@ export function linkFor(id, { content: c }) {
 /** Alt text: the piece's own words, in reading order, without markup. */
 export function altFor(id, { content: c, edition: e, weather: w, activity: a }) {
   if (id === 'masthead') return `${c.masthead.title}. Vol. ${e.volume}, No. ${e.issue}. ${e.dateLabel}.`;
-  if (id === 'lead') return join(`${c.profile.kicker}: ${c.profile.headline}`, c.profile.dek, ...c.profile.paragraphs, `“${c.profile.quote}”`);
-  if (id === 'side') {
-    return join('Letters to the Editor', ...c.letters.map((l) => `“${l.q}” — ${l.from}. Editor: ${l.a}`),
-      'Currently', ...c.currently.map((x) => `${x.label}: ${x.text}`));
-  }
+  if (id === 'about') return join(`${c.about.kicker}: ${c.name}, ${c.about.role}`, c.about.text);
   if (id === 'activity') {
     return join(`Markets: ${a.headline}`, `${num(a.total)} contributions in the last year`, `${num(a.allTime)} all-time`,
       `Active on ${num(a.activeDays)} of ${num(a.dayCount)} days`, `Longest streak: ${num(a.longestStreak)} days`,

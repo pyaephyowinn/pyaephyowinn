@@ -29,7 +29,7 @@ test('every piece is present', () => {
 });
 
 test('escapes content', () => {
-  const html = renderPage(model((c) => { c.letters[0].q = 'A < B & "C" ⭐'; }), { draft: true });
+  const html = renderPage(model((c) => { c.about.text = 'A < B & "C" ⭐'; }), { draft: true });
   assert.ok(html.includes('A &lt; B &amp; &quot;C&quot; ⭐'));
   assert.ok(!html.includes('<B'));
 });
@@ -47,9 +47,9 @@ test('business url label', () => {
 
 test('draft highlights placeholders', () => {
   const html = renderPage(model((c) => {
-    c.profile.quote = 'TODO: quote';
-    c.letters[2].a = 'TypeScript, TODO: tools';
-    c.currently[0].text = 'TODO: building';
+    c.about.text = 'TODO: bio';
+    c.about.role = 'Engineer, TODO: title';
+    c.classifieds.text = 'TODO: ad';
   }), { draft: true });
   const hits = html.split('TODO:').length - 1;
   assert.ok(hits >= 3);

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Render The Pyae Phyo Times: content.yml → img/*.png + README.md.
+// Render The Pyae Times: content.yml → img/*.png + README.md.
 //   node scripts/render.js            strict: refuses TODO: placeholders, writes img/ and README.md
 //   node scripts/render.js --draft    highlights placeholders, writes preview/ only
 //   --date=YYYY-MM-DD                 render as of that date (UTC) instead of today

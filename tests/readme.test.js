@@ -21,14 +21,15 @@ const imgTag = (id) => readme.match(new RegExp(`<img src="img/${id}\\.[^"]+"[^>]
 
 test('links each target once', () => {
   assert.equal(readme.split('<a href="https://pos.triumsoft.net/">').length - 1, 1);
-  for (const id of ['side', 'weather', 'projects-bar', 'business-bar']) {
+  for (const id of ['weather', 'projects-bar', 'business-bar']) {
     assert.ok(!new RegExp(`<a [^>]*><img src="img/${id}\\.`).test(readme), id);
   }
   assert.ok(readme.includes('<a href="https://pyaephyowin.com"><img src="img/masthead.'));
+  assert.ok(readme.includes('<a href="https://pyaephyowin.com"><img src="img/about.'));
 });
 
 test('widths match spans', () => {
-  assert.match(imgTag('lead'), /width="66.67%"/);
+  assert.match(imgTag('about'), /width="100%"/);
   assert.match(imgTag('weather'), /width="41.67%"/);
   assert.match(imgTag('masthead'), /width="100%"/);
 });
@@ -37,7 +38,7 @@ test('alt carries the story', () => {
   const alt = altFor('project-sleight', model);
   assert.ok(alt.includes('Man Escapes Endless Log-Out Loop'));
   assert.ok(alt.includes('named profiles'));
-  assert.equal(altFor('masthead', model), 'The Pyae Phyo Times. Vol. IV, No. 48. Monday, November 23, 2026.');
+  assert.equal(altFor('masthead', model), 'The Pyae Times. Vol. IV, No. 48. Monday, November 23, 2026.');
   assert.ok(!altFor('classifieds', model).includes('**'));
 });
 
@@ -64,11 +65,11 @@ test('hashed paths', () => {
 
 test('multi-line content stays on one line', () => {
   const c = structuredClone(content);
-  c.profile.paragraphs[0] = 'First line.\n\nSecond paragraph.';
+  c.about.text = 'First line.\n\nSecond paragraph.';
   const out = buildReadme(pieces, { ...model, content: c });
   const paper = out.match(/<p>([\s\S]*?)<\/p>/)[1];
   assert.ok(!paper.includes('\n'));
-  assert.ok(altFor('lead', { ...model, content: c }).includes('First line. Second paragraph.'));
+  assert.ok(altFor('about', { ...model, content: c }).includes('First line. Second paragraph.'));
 });
 
 test('rows join without whitespace', () => {

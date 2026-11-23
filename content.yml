@@ -1,4 +1,4 @@
-# All the words on the front page of The Pyae Phyo Times.
+# All the words on the front page of The Pyae Times.
 # Inline markup: **bold**, *italic*, _underline_. Anything containing "TODO:" blocks publishing.
 login: pyaephyowinn
 name: Pyae Phyo Win
@@ -7,36 +7,17 @@ linkedin: https://www.linkedin.com/in/pyae-phyo-win-762792246/
 startYear: 2022
 
 masthead:
-  title: The Pyae Phyo Times
+  title: The Pyae Times
   motto: “All the code that’s fit to commit”
   edition: Late City Edition
   price: One ⭐
   role: Software engineer · full stack
 
-profile:
-  kicker: Profile
-  headline: Engineer Ships Products by Day, Builds Toys by Night
-  dek: Four-plus years of production web apps, the AI features inside them, and a growing habit of making software look like something else.
-  caption: Pyae Phyo Win, at the desk.
-  paragraphs:
-    - "Pyae Phyo Win is a full-stack software engineer who has spent more than four years building web apps that real businesses run on: CRMs, point-of-sale systems, and order tools for shops that sell online. Lately the work has moved into the AI features inside those apps, including RAG, LLM assistants and data tooling."
-    - When the day’s work ships, the side projects start. They include a UI library dressed as a newspaper and a browser extension built after logging out one time too many.
-  quote: Code is the only thing I know how to turn into money. Luckily, it’s also what I’d do for fun.
-  more: Full story at pyaephyowin.com →
-
-letters:
-  - q: What does this engineer actually do?
-    from: A Curious Reader
-    a: Builds full-stack web apps and the AI features inside them.
-  - q: Why does everything end up looking like a newspaper?
-    from: Concerned Designer
-    a: A README is a developer’s front page. This one just took it literally.
-  - q: What’s the stack?
-    from: Fellow Developer
-    a: TypeScript and JavaScript, with Go on the back end and RAG for the AI features.
-
-currently:
-  - { label: Building, text: CRM software }
+about:
+  kicker: About the Editor
+  role: Full-stack software engineer
+  text: "Four-plus years building web apps that real businesses run on: CRMs, point-of-sale systems and order tools for shops that sell online, plus the AI features inside them. After hours, side projects that make software look like something else."
+  more: pyaephyowin.com →
 
 sections:
   projects: { title: Side Projects, tagline: "Built for fun, shipped anyway" }
