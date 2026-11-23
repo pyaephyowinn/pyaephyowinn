@@ -1,5 +1,6 @@
 import { ROWS } from './layout.js';
 import { urlLabel } from './page.js';
+import { num } from './activity.js';
 
 const plain = (s) => String(s).replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1').replace(/(^|[\s(])_(.+?)_(?=$|[\s.,;:!?)])/g, '$1$2');
 const attr = (s) => String(s).replace(/\s+/g, ' ').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -24,10 +25,9 @@ export function altFor(id, { content: c, edition: e, weather: w, activity: a }) 
       'Currently', ...c.currently.map((x) => `${x.label}: ${x.text}`));
   }
   if (id === 'activity') {
-    return join(`Markets: ${a.headline}`,
-      `${a.total.toLocaleString('en-US')} contributions in the last year`,
-      `Active on ${a.activeDays} of ${a.dayCount} days`, `Longest streak: ${a.longestStreak} days`,
-      a.busiest && `Busiest day: ${a.busiest.label}, with ${a.busiest.count} contributions`);
+    return join(`Markets: ${a.headline}`, `${num(a.total)} contributions in the last year`, `${num(a.allTime)} all-time`,
+      `Active on ${num(a.activeDays)} of ${num(a.dayCount)} days`, `Longest streak: ${num(a.longestStreak)} days`,
+      `Current streak: ${num(a.currentStreak)} days`, a.bestMonth && `Best month: ${a.bestMonth.long}, with ${num(a.bestMonth.count)}`);
   }
   if (id === 'projects-bar') return join(`${c.sections.projects.title}: ${c.sections.projects.tagline}`);
   if (id === 'business-bar') return join(`${c.sections.business.title}: ${c.sections.business.tagline}`);

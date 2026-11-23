@@ -12,7 +12,7 @@ const model = {
   content,
   edition: editionInfo(new Date('2026-11-23T00:00:00Z'), content.startYear),
   weather: { top: [{ name: 'JavaScript', pct: 76 }, { name: 'TypeScript', pct: 19 }], otherPct: 5, forecast: 'mostly JavaScript, with spells of TypeScript and a high chance of side projects.' },
-  activity: summarizeActivity({ total: 5190, priorTotal: 2556, weeks: calendar('2025-11-23', '2026-11-23', (_, i) => i % 3) }),
+  activity: summarizeActivity({ total: 5190, priorTotal: 2556, allTime: 8760, days: calendar('2025-11-23', '2026-11-23', (_, i) => i % 3) }),
   avatar: '',
 };
 const pieces = ROWS.flat().map(({ id }) => ({ id, file: `${id}.abcdef12.png`, width: 100, height: 100, bytes: 1 }));
