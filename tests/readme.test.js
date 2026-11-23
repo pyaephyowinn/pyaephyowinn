@@ -21,7 +21,7 @@ const imgTag = (id) => readme.match(new RegExp(`<img src="img/${id}\\.[^"]+"[^>]
 
 test('links each target once', () => {
   assert.equal(readme.split('<a href="https://pos.triumsoft.net/">').length - 1, 1);
-  for (const id of ['weather', 'projects-bar', 'business-bar']) {
+  for (const id of ['weather']) {
     assert.ok(!new RegExp(`<a [^>]*><img src="img/${id}\\.`).test(readme), id);
   }
   assert.ok(readme.includes('<a href="https://pyaephyowin.com"><img src="img/masthead.'));
@@ -48,6 +48,12 @@ test('commit index links to the profile and reads out the numbers', () => {
   assert.ok(alt.startsWith('Markets: Commit Index'));
   assert.ok(alt.includes('5,190 contributions in the last year.'));
   assert.match(alt, /Longest streak: \d+ days\./);
+});
+
+test('section title opens the first piece of its row', () => {
+  assert.match(imgTag('project-newspapercn'), /alt="Side Projects: Built for fun, shipped anyway\. shadcn\/ui Gets/);
+  assert.match(imgTag('biz-f2f'), /alt="Business \S+ Industry: The day job/);
+  assert.doesNotMatch(imgTag('project-sleight'), /Side Projects/);
 });
 
 test('text footer', () => {

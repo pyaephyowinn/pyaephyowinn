@@ -58,11 +58,18 @@ test('draft highlights placeholders', () => {
 
 test('commit index shows the year', () => {
   const html = renderPage(model(), { draft: true });
-  const piece = html.slice(html.indexOf('data-piece="activity"'), html.indexOf('data-piece="projects-bar"'));
+  const piece = html.slice(html.indexOf('data-piece="activity"'), html.indexOf('data-piece="project-newspapercn"'));
   assert.ok(piece.includes('5,190'));
   assert.ok(!piece.includes('on the year before'));
   assert.ok(piece.includes('8,760'));
   assert.ok(!piece.includes('<svg'));
+});
+
+test('section bars head their rows', () => {
+  const html = renderPage(model(), { draft: true });
+  const group = html.slice(html.indexOf('<div class="group" data-group><div class="section-bar"><b>Side Projects'));
+  assert.ok(group.indexOf('data-piece="project-newspapercn"') < group.indexOf('</div></div>'));
+  assert.ok(!html.includes('data-piece="projects-bar"'));
 });
 
 test('masthead shows edition', () => {

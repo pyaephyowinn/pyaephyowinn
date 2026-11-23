@@ -57,9 +57,12 @@ figcaption { font-size:11px; font-style:italic; color:var(--muted); margin-top:4
 .mkt-stats b { display:block; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; margin-top:6px; }
 
 /* section bars */
-.section-bar { padding:6px 28px; display:flex; justify-content:space-between; align-items:baseline; }
-.section-bar b { font-family:'Playfair Display',serif; font-weight:900; font-size:18px; letter-spacing:3px; text-transform:uppercase; }
-.section-bar span { font-size:11px; font-style:italic; }
+.group > .section-bar { padding:8px 28px 6px; display:flex; justify-content:space-between; align-items:baseline;
+  background-color:var(--paper); background-image:radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px); background-size:3px 3px;
+  border-top:2px solid var(--ink); border-bottom:1px solid var(--ink); }
+.group > .row > .piece { border-top:0; }
+.group > .section-bar b { font-family:'Playfair Display',serif; font-weight:900; font-size:18px; letter-spacing:3px; text-transform:uppercase; }
+.group > .section-bar span { font-size:11px; font-style:italic; }
 
 /* side projects */
 .project { padding:14px 18px 16px; }

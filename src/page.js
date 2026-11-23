@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { ROWS, SPAN_PX } from './layout.js';
+import { ROWS, SECTION_HEADS, SPAN_PX } from './layout.js';
 import { ART } from './art.js';
 import { num } from './activity.js';
 
@@ -71,8 +71,6 @@ function pieces(model, t) {
         ${a.bestMonth ? stat(num(a.bestMonth.count), 'Best month', ` ${escapeHtml(a.bestMonth.label)}`) : ''}
       </div>
     </div>`;
-  p['projects-bar'] = `<b>${t(c.sections.projects.title)}</b><span>${t(c.sections.projects.tagline)}</span>`;
-  p['business-bar'] = `<b>${t(c.sections.business.title)}</b><span>${t(c.sections.business.tagline)}</span>`;
   for (const pr of c.projects) {
     p[`project-${pr.id}`] = `
       <div class="kicker">${t(pr.kicker)}</div>
@@ -96,16 +94,21 @@ function pieces(model, t) {
   return p;
 }
 
-const CLASS = (id) => id === 'masthead' ? 'mast' : id.endsWith('-bar') ? 'section-bar'
-  : id.startsWith('project-') ? 'project' : id.startsWith('biz-') ? 'biz' : id;
+const CLASS = (id) => id === 'masthead' ? 'mast' : id.startsWith('project-') ? 'project' : id.startsWith('biz-') ? 'biz' : id;
 
 /** The whole front page as one HTML document; every [data-piece] is screenshotted on its own. */
 export function renderPage(model, { draft = false } = {}) {
   const t = (s) => inline(s, { draft });
   const p = pieces(model, t);
-  const rows = ROWS.map((row) => `<div class="row">${row.map(({ id, span }) => {
-    if (p[id] == null) throw new Error(`no template for piece ${id}`);
-    return `<section class="piece ${CLASS(id)}" data-piece="${id}" style="flex:0 0 ${span * SPAN_PX}px;width:${span * SPAN_PX}px">${p[id]}</section>`;
-  }).join('')}</div>`).join('\n');
+  const sections = model.content.sections;
+  const rows = ROWS.map((row) => {
+    const pieceHtml = row.map(({ id, span }) => {
+      if (p[id] == null) throw new Error(`no template for piece ${id}`);
+      return `<section class="piece ${CLASS(id)}" data-piece="${id}" style="flex:0 0 ${span * SPAN_PX}px;width:${span * SPAN_PX}px">${p[id]}</section>`;
+    }).join('');
+    const head = SECTION_HEADS[row[0].id];
+    if (!head) return `<div class="row">${pieceHtml}</div>`;
+    return `<div class="group" data-group><div class="section-bar"><b>${t(sections[head].title)}</b><span>${t(sections[head].tagline)}</span></div><div class="row">${pieceHtml}</div></div>`;
+  }).join('\n');
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>${escapeHtml(model.content.masthead.title)}</title><style>${css()}</style></head><body>${rows}</body></html>`;
 }

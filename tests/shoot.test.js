@@ -26,6 +26,18 @@ test('row pieces share height', async () => {
   assert.ok(pieces[0].height > 400);
 });
 
+test('grouped pieces include their slice of the section bar', async () => {
+  const bar = (inGroup) => `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${css}</style></head><body>
+    ${inGroup ? '<div class="group" data-group><div class="section-bar" style="height:40px"><b>Head</b></div>' : '<div>'}
+    <div class="row"><section class="piece" data-piece="a" style="flex:0 0 444px;width:444px;height:100px"></section><section class="piece" data-piece="b" style="flex:0 0 444px;width:444px;height:100px"></section></div>
+    </div></body></html>`;
+  const [plain, grouped] = await Promise.all([screenshotPieces(bar(false), tmp()), screenshotPieces(bar(true), tmp())]);
+  assert.equal(plain[0].height, 200);
+  assert.equal(grouped[0].height, 280);
+  assert.equal(grouped[1].height, 280);
+  assert.equal(grouped[0].width, 888);
+});
+
 test('hashed names change with content', async () => {
   const [a, b] = await Promise.all([screenshotPieces(page('first', 'same'), tmp()), screenshotPieces(page('second', 'same'), tmp())]);
   assert.match(a[0].file, /^one\.[0-9a-f]{8}\.png$/);

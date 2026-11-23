@@ -1,4 +1,4 @@
-import { ROWS } from './layout.js';
+import { ROWS, SECTION_HEADS } from './layout.js';
 import { urlLabel } from './page.js';
 import { num } from './activity.js';
 
@@ -25,8 +25,6 @@ export function altFor(id, { content: c, edition: e, weather: w, activity: a }) 
       `Active on ${num(a.activeDays)} of ${num(a.dayCount)} days`, `Longest streak: ${num(a.longestStreak)} days`,
       `Current streak: ${num(a.currentStreak)} days`, a.bestMonth && `Best month: ${a.bestMonth.long}, with ${num(a.bestMonth.count)}`);
   }
-  if (id === 'projects-bar') return join(`${c.sections.projects.title}: ${c.sections.projects.tagline}`);
-  if (id === 'business-bar') return join(`${c.sections.business.title}: ${c.sections.business.tagline}`);
   if (id.startsWith('project-')) { const p = c.projects.find((x) => `project-${x.id}` === id); return join(p.headline, p.body); }
   if (id.startsWith('biz-')) { const b = c.business.find((x) => `biz-${x.id}` === id); return join(`${b.name}: ${b.body}`, urlLabel(b.url).replace(/ →$/, '')); }
   if (id === 'classifieds') return join('Classifieds', c.classifieds.text);
@@ -44,7 +42,9 @@ export function buildReadme(pieces, model) {
   const files = new Map(pieces.map((p) => [p.id, p.file]));
   const rows = ROWS.map((row) => row.map(({ id, span }) => {
     if (!files.has(id)) throw new Error(`missing image for piece ${id}`);
-    const img = `<img src="img/${files.get(id)}" width="${width(span)}" alt="${attr(altFor(id, model))}">`;
+    const head = SECTION_HEADS[id] && model.content.sections[SECTION_HEADS[id]];
+    const alt = head ? join(`${head.title}: ${head.tagline}`, altFor(id, model)) : altFor(id, model);
+    const img = `<img src="img/${files.get(id)}" width="${width(span)}" alt="${attr(alt)}">`;
     const href = linkFor(id, model);
     return href ? `<a href="${attr(href)}">${img}</a>` : img;
   }).join(''));
