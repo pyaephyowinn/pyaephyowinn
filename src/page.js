@@ -2,6 +2,30 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { ROWS, SPAN_PX } from './layout.js';
 import { ART } from './art.js';
+import { num } from './activity.js';
+
+const INK = ['#e2d6b6', '#b8ab8e', '#857a65', '#4a443a', '#1a1a1a'];
+const CELL = 10;
+const STEP = 12;
+const SHORT_MONTH = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'short' });
+
+/** The contribution calendar as an ink-on-paper SVG: one column per week, one square per day. */
+export function heatmap(weeks) {
+  const top = 13;
+  let labels = [];
+  weeks.forEach((w, col) => {
+    const first = w.find((d) => d.date.endsWith('-01')) ?? (col === 0 ? w[0] : null); // a month starts this week
+    const key = first?.date.slice(0, 7);
+    if (key && labels.at(-1)?.key !== key) labels.push({ key, col, text: SHORT_MONTH.format(new Date(`${key}-01T00:00:00Z`)) });
+  });
+  labels = labels.filter((l, i) => (labels[i + 1]?.col ?? weeks.length) - l.col >= 3);
+  const cells = weeks.flatMap((w, col) => w.map((d) =>
+    `<rect x="${col * STEP}" y="${top + d.weekday * STEP}" width="${CELL}" height="${CELL}" fill="${INK[d.level]}"/>`));
+  const text = labels.map((l) => `<text x="${l.col * STEP}" y="9" font-family="Old Standard TT" font-size="9" letter-spacing=".5">${l.text.toUpperCase()}</text>`);
+  return `<svg viewBox="0 0 ${weeks.length * STEP - (STEP - CELL)} ${top + 7 * STEP - (STEP - CELL)}" xmlns="http://www.w3.org/2000/svg">${text.join('')}${cells.join('')}</svg>`;
+}
+
+const legend = () => `<span class="scale">Less ${INK.map((c) => `<i style="background:${c}"></i>`).join('')} More</span>`;
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const FONTS = [
@@ -40,7 +64,7 @@ export function inline(s, { draft = false } = {}) {
 export const urlLabel = (url) => new URL(url).host.replace(/^www\./, '') + new URL(url).pathname.replace(/\/$/, '') + ' →';
 
 function pieces(model, t) {
-  const { content: c, edition: e, weather: w, avatar } = model;
+  const { content: c, edition: e, weather: w, activity: a, avatar } = model;
   const p = {};
   p.masthead = `
     <div class="ears"><span>Vol. ${e.volume} · No. ${e.issue}</span><span>${t(c.masthead.edition)}</span><span>Price: ${t(c.masthead.price)}</span></div>
@@ -67,6 +91,26 @@ function pieces(model, t) {
     <div class="block now">
       <div class="kicker">Currently</div>
       ${c.currently.map((x) => `<div class="item"><b>${t(x.label)}</b><span>${t(x.text)}</span></div>`).join('')}
+    </div>`;
+  const arrow = (n) => (n > 0 ? '▲' : n < 0 ? '▼' : '');
+  p.activity = `
+    <div class="mkt-head"><span class="kicker">Markets · The Commit Index</span><span class="src">github.com/${escapeHtml(c.login)} →</span></div>
+    <h2 class="hed">${escapeHtml(a.headline)}</h2>
+    <div class="mkt-grid">
+      <div class="mkt-fig">
+        <div class="big">${num(a.total)}</div>
+        <div class="cap">contributions in the last year</div>
+        <div class="stats">
+          <div><b>Active days</b><span>${num(a.activeDays)} of ${num(a.dayCount)}</span></div>
+          <div><b>Longest streak</b><span>${num(a.longestStreak)} days</span></div>
+          <div><b>Current streak</b><span>${num(a.currentStreak)} days</span></div>
+          ${a.busiest ? `<div><b>Busiest day</b><span>${escapeHtml(a.busiest.short)} · ${num(a.busiest.count)}</span></div>` : ''}
+        </div>
+      </div>
+      <div class="mkt-chart">
+        <figure>${heatmap(a.weeks)}<figcaption><span>One square a day. The darker the ink, the busier the desk.</span>${legend()}</figcaption></figure>
+        <div class="ticker">${a.months.map((m) => `<span><b>${escapeHtml(m.label)}</b> ${num(m.count)}${m.trend ? ` <em class="${m.trend > 0 ? 'up' : 'down'}">${arrow(m.trend)}</em>` : ''}</span>`).join('')}</div>
+      </div>
     </div>`;
   p['projects-bar'] = `<b>${t(c.sections.projects.title)}</b><span>${t(c.sections.projects.tagline)}</span>`;
   p['business-bar'] = `<b>${t(c.sections.business.title)}</b><span>${t(c.sections.business.tagline)}</span>`;

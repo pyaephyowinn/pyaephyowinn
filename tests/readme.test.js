@@ -4,12 +4,15 @@ import { loadContent } from '../src/content.js';
 import { editionInfo } from '../src/edition.js';
 import { ROWS } from '../src/layout.js';
 import { buildReadme, altFor } from '../src/readme.js';
+import { summarizeActivity } from '../src/activity.js';
+import { calendar } from './fixtures.js';
 
 const content = loadContent('content.yml', { draft: true });
 const model = {
   content,
   edition: editionInfo(new Date('2026-11-23T00:00:00Z'), content.startYear),
   weather: { top: [{ name: 'JavaScript', pct: 76 }, { name: 'TypeScript', pct: 19 }], otherPct: 5, forecast: 'mostly JavaScript, with spells of TypeScript and a high chance of side projects.' },
+  activity: summarizeActivity({ total: 5190, priorTotal: 2556, weeks: calendar('2025-11-23', '2026-11-23', (_, i) => i % 3) }),
   avatar: '',
 };
 const pieces = ROWS.flat().map(({ id }) => ({ id, file: `${id}.abcdef12.png`, width: 100, height: 100, bytes: 1 }));
@@ -38,6 +41,14 @@ test('alt carries the story', () => {
   assert.ok(!altFor('classifieds', model).includes('**'));
 });
 
+test('commit index links to the profile and reads out the numbers', () => {
+  assert.ok(readme.includes('<a href="https://github.com/pyaephyowinn"><img src="img/activity.'));
+  const alt = altFor('activity', model);
+  assert.ok(alt.startsWith('Markets: Commit Index'));
+  assert.ok(alt.includes('5,190 contributions in the last year.'));
+  assert.match(alt, /Longest streak: \d+ days\./);
+});
+
 test('text footer', () => {
   const last = readme.trim().split('\n').pop();
   assert.ok(last.includes('https://pyaephyowin.com'));
@@ -47,7 +58,7 @@ test('text footer', () => {
 
 test('hashed paths', () => {
   const srcs = [...readme.matchAll(/src="([^"]+)"/g)].map((m) => m[1]);
-  assert.equal(srcs.length, 13);
+  assert.equal(srcs.length, ROWS.flat().length);
   for (const s of srcs) assert.match(s, /^img\/[a-z0-9-]+\.[0-9a-f]{8}\.png$/);
 });
 

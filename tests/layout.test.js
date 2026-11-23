@@ -9,7 +9,7 @@ test('spans sum to 12 per row', () => {
 
 test('ids are unique and complete', () => {
   assert.deepEqual(ROWS.flat().map((p) => p.id), [
-    'masthead', 'lead', 'side', 'projects-bar', 'project-newspapercn', 'project-sleight',
+    'masthead', 'lead', 'side', 'activity', 'projects-bar', 'project-newspapercn', 'project-sleight',
     'business-bar', 'biz-f2f', 'biz-bizcopilot', 'biz-pos', 'biz-mmtrails', 'classifieds', 'weather',
   ]);
 });

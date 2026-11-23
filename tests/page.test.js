@@ -6,6 +6,8 @@ import { editionInfo } from '../src/edition.js';
 import { ROWS } from '../src/layout.js';
 import { renderPage } from '../src/page.js';
 import { fetchAvatarDataUri } from '../src/avatar.js';
+import { summarizeActivity } from '../src/activity.js';
+import { calendar } from './fixtures.js';
 
 const model = (edit = () => {}) => {
   const content = loadContent('content.yml', { draft: true });
@@ -14,6 +16,7 @@ const model = (edit = () => {}) => {
     content,
     edition: editionInfo(new Date('2026-11-23T00:00:00Z'), content.startYear),
     weather: { top: [{ name: 'JavaScript', pct: 76 }, { name: 'TypeScript', pct: 19 }], otherPct: 5, forecast: 'mostly JavaScript, with spells of TypeScript and a high chance of side projects.' },
+    activity: summarizeActivity({ total: 5190, priorTotal: 2556, weeks: calendar('2025-11-23', '2026-11-23', (_, i) => i % 3) }),
     avatar: 'data:image/png;base64,AAAA',
   };
 };
@@ -51,6 +54,14 @@ test('draft highlights placeholders', () => {
   const hits = html.split('TODO:').length - 1;
   assert.ok(hits >= 3);
   assert.equal(html.split('<span class="draft">TODO:').length - 1, hits);
+});
+
+test('commit index shows the year', () => {
+  const html = renderPage(model(), { draft: true });
+  const piece = html.slice(html.indexOf('data-piece="activity"'), html.indexOf('data-piece="projects-bar"'));
+  assert.ok(piece.includes('5,190'));
+  assert.ok(!piece.includes('on the year before'));
+  assert.ok(piece.includes('<svg'));
 });
 
 test('masthead shows edition', () => {

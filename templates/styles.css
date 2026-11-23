@@ -53,6 +53,27 @@ figcaption { font-size:11px; font-style:italic; color:var(--muted); margin-top:4
 .now .item { font-size:12.5px; padding:4px 0; border-bottom:1px dotted #00000055; display:grid; grid-template-columns:76px 1fr; }
 .now .item b { font-size:10px; letter-spacing:2px; text-transform:uppercase; padding-top:2px; }
 
+/* markets: the commit index */
+.activity { padding:14px 28px 16px; }
+.mkt-head { display:flex; justify-content:space-between; align-items:baseline; }
+.mkt-head .src { font-size:11px; font-style:italic; color:var(--muted); }
+.activity .hed { font-size:30px; margin:2px 0 12px; }
+.mkt-grid { display:grid; grid-template-columns:190px 1fr; gap:22px; border-top:1px solid var(--ink); padding-top:12px; }
+.mkt-fig { border-right:1px solid var(--ink); padding-right:20px; }
+.mkt-fig .big { font-family:'Playfair Display',serif; font-weight:900; font-size:54px; line-height:.95; letter-spacing:-1px; }
+.mkt-fig .cap { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin:4px 0 10px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+.mkt-fig .stats div { display:flex; justify-content:space-between; font-size:12px; padding:3px 0; border-bottom:1px dotted #00000055; }
+.mkt-fig .stats b { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; padding-top:1px; }
+.mkt-chart figure { margin:0; }
+.mkt-chart svg { display:block; width:100%; }
+.mkt-chart figcaption { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+.scale { font-style:normal; display:inline-flex; align-items:center; gap:3px; }
+.scale i { display:inline-block; width:9px; height:9px; }
+.ticker { display:grid; grid-template-columns:repeat(6, 1fr); gap:4px 12px; margin-top:8px; padding:6px 0 0; border-top:3px double var(--ink); font-size:11.5px; font-variant-numeric:tabular-nums; }
+.ticker b { font-size:10px; letter-spacing:1px; text-transform:uppercase; }
+.ticker em { font-style:normal; font-size:9px; }
+.ticker em.down { color:var(--muted); }
+
 /* section bars */
 .section-bar { padding:6px 28px; display:flex; justify-content:space-between; align-items:baseline; }
 .section-bar b { font-family:'Playfair Display',serif; font-weight:900; font-size:18px; letter-spacing:3px; text-transform:uppercase; }

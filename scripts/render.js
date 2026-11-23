@@ -11,6 +11,7 @@ import { loadContent } from '../src/content.js';
 import { editionInfo } from '../src/edition.js';
 import { fetchLanguageBytes, summarizeLanguages } from '../src/weather.js';
 import { fetchAvatarDataUri } from '../src/avatar.js';
+import { fetchContributions, summarizeActivity } from '../src/activity.js';
 import { renderPage } from '../src/page.js';
 import { screenshotPieces } from '../src/shoot.js';
 import { buildReadme } from '../src/readme.js';
@@ -34,9 +35,11 @@ async function main() {
   const { draft, date } = parseArgs(process.argv.slice(2));
   const content = loadContent(join(ROOT, 'content.yml'), { draft });
   const edition = editionInfo(date, content.startYear);
-  const weather = summarizeLanguages(await fetchLanguageBytes(content.login, { token: process.env.GITHUB_TOKEN }));
+  const token = process.env.GITHUB_TOKEN;
+  const weather = summarizeLanguages(await fetchLanguageBytes(content.login, { token }));
+  const activity = summarizeActivity(await fetchContributions(content.login, { token, date }));
   const avatar = await fetchAvatarDataUri(`https://github.com/${content.login}.png?size=300`, join(ROOT, 'assets/avatar-fallback.png'));
-  const model = { content, edition, weather, avatar };
+  const model = { content, edition, weather, activity, avatar };
 
   const html = renderPage(model, { draft });
   const stage = mkdtempSync(join(tmpdir(), 'times-'));
